@@ -166,7 +166,7 @@ public class ProductServiceImpl implements IProductService {
     public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isNotBlank(productName)) {
-            productName = new StringBuilder().append("%").append(productName).append("%").toString();
+            productName = new StringBuilder().append("'%").append(productName).append("%'").toString();
         }
         List<Product> productList = productMapper.selectByNameAndProductId(productName, productId);
 
@@ -215,7 +215,7 @@ public class ProductServiceImpl implements IProductService {
             categoryIdList = categoryService.selectCategoryAndChildrenById(category.getId()).getData();
         }
         if (StringUtils.isNotBlank(keyword)) {
-            keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
+            keyword = new StringBuilder().append("'%").append(keyword).append("%'").toString();
         }
         //排序处理
         if (StringUtils.isNotBlank(orderBy)) {
