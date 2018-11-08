@@ -22,6 +22,7 @@ public class CookieUtil {
         ck.setPath("/");//代表设置在根目录
         //如果maxAge不设置，cookie就不会写入硬盘，而是写在内存，只在当前页面有效
         ck.setMaxAge(60 * 60 * 24 * 365);//-1:永久
+        ck.setHttpOnly(true);
         log.info("write cookieName:{},cookieValue:{}", ck.getName(), ck.getValue());
         response.addCookie(ck);
     }

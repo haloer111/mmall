@@ -40,15 +40,14 @@ public class UserController {
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session, HttpServletResponse
-            httpServletResponse, HttpServletRequest request) {
+            httpServletResponse) {
         ServerResponse<User> user = iUserService.login(username, password);
         if (user.isSuccess()) {
             //F1D230CAD45FAA6286F7AF6F8756AFB0
             //F1D230CAD45FAA6286F7AF6F8756AFB0
 //            session.setAttribute(Const.CURRENT_USER, user.getData());
             CookieUtil.writeLoginToken(httpServletResponse, session.getId());
-            CookieUtil.readLoginToken(request);
-            CookieUtil.delLoginToken(httpServletResponse, request);
+
             RedisPoolUtil.setEx(session.getId(), JsonUtil.obj2String(user.getData()), Const.RedisCacheExtime
                     .REDIS_SESSION_EXTIME);
         }
