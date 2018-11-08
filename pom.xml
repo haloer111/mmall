@@ -298,6 +298,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
@@ -311,7 +312,7 @@
 
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
+        <directory>src/main/resources.${deploy.type}</directory>
         <excludes>
           <exclude>*.jsp</exclude>
         </excludes>
@@ -323,13 +324,15 @@
 
   </build>
 
+  <!--　　profile可以让我们定义一系列的配置信息，然后指定其激活条件。这样我们就可以定义多个profile，
+          然后每个profile对应不同的激活条件和配置信息，从而达到不同环境使用不同配置信息的效果。-->
   <profiles>
     <profile>
       <id>dev</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
+      <activation><!--激活-->
+        <activeByDefault>true</activeByDefault><!--默认激活-->
       </activation>
-      <properties>
+      <properties><!--内容-->
         <deploy.type>dev</deploy.type>
       </properties>
     </profile>

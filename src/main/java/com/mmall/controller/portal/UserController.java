@@ -5,6 +5,8 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
+import com.mmall.util.JsonUtil;
+import com.mmall.util.RedisPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +39,9 @@ public class UserController {
     public ServerResponse<User> login(String username, String password, HttpSession session) {
         ServerResponse<User> user = iUserService.login(username, password);
         if (user.isSuccess()) {
-            session.setAttribute(Const.CURRENT_USER, user.getData());
+//            session.setAttribute(Const.CURRENT_USER, user.getData());
+            RedisPoolUtil.setEx(session.getId(), JsonUtil.obj2String(user.getData()), Const.RedisCacheExtime
+                    .REDIS_SESSION_EXTIME);
         }
         return user;
     }

@@ -9,6 +9,7 @@ import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IOrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/order/")
+@Slf4j
 public class OrderController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
 
     @Autowired
     private IOrderService iOrderService;
@@ -73,7 +74,7 @@ public class OrderController {
             params.put(name, valueStr);
         }
 
-        LOGGER.info("支付宝回调,sign:{},trade_status:{},参数:{}", params.get("sign"), params.get("trade_status"), params
+        log.info("支付宝回调,sign:{},trade_status:{},参数:{}", params.get("sign"), params.get("trade_status"), params
                 .toString());
 
         params.remove("sign_type");
@@ -84,7 +85,7 @@ public class OrderController {
                 return ServerResponse.createByErrorMessage("非法请求，验证不通过");
             }
         } catch (AlipayApiException e) {
-            LOGGER.info("支付宝验证回调异常", e);
+            log.info("支付宝验证回调异常", e);
         }
 
         //todo 验证数据
