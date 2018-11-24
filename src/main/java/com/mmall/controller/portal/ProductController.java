@@ -31,7 +31,7 @@ public class ProductController {
         return productService.getProductDetail(productId);
     }
 
-    @RequestMapping("detail.do")
+    @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse<PageInfo> list(@RequestParam(value = "keyword", required = false) String keyword,
                                          @RequestParam(value = "categoryId", required = false) Integer categoryId,
